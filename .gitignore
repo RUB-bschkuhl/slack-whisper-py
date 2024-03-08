@@ -1,0 +1,27 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pyzw
+
+# Virtual Environment
+venv/
+env/
+env.bak/
+env1/
+env2/
+.env
+.venv
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependency Management
+pip-lock.txt
+pipenv.lock

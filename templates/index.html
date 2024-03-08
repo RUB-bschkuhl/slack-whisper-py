@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>	Live-Transkription und interaktives Coaching </title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #294466;
+            background-color: #f4f4f4;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #294466;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            height: 150px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background-color: #294466;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #273355;
+        }
+
+        .spinner-border {
+            display: none;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-5">Voice Recorder</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <label for="prompt" class="form-label">Prompt:</label>
+                <textarea id="prompt" rows="10" cols="50"></textarea>
+                <br>
+                <button id="recordButton" class="btn">Start Recording</button>
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="transcript" class="container mt-5"></div>
+
+    <!-- <button id="summaryButton" class="btn btn-primary mt-5">Get Suggestion</button>
+    <div id="suggestion" class="mt-3"></div> -->
+
+    <script>
+        const recordButton = document.getElementById('recordButton');
+        const transcriptDiv = document.getElementById('transcript');
+        // const summaryButton = document.getElementById('summaryButton');
+
+        let isRecording = false;
+        let mediaRecorder;
+        let intervalId;
+        let full_transcript = '';
+
+        // summaryButton.addEventListener('click', async () => {
+        //     const promptText = document.getElementById('prompt').value;
+
+        //     const response = await fetch('/get-suggestion', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ transcript: full_transcript, prompt: promptText })
+        //     });
+
+        //     const data = await response.json();
+        //     console.log(data);
+        //     document.getElementById('suggestion').textContent = data.suggestion;
+        // });
+
+        recordButton.addEventListener('click', () => {
+            console.log("test")
+            if (!isRecording) {
+                startRecording();
+                recordButton.textContent = 'Stop Recording';
+            } else {
+                stopRecording();
+                recordButton.textContent = 'Start Recording';
+            }
+            isRecording = !isRecording;
+        });
+
+        async function startRecording() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            function createRecorder() {
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.addEventListener('dataavailable', async event => {
+                    console.log('Data available');
+                    const audioBlob = event.data;
+                    const formData = new FormData();
+                    formData.append('audio', audioBlob);
+
+                    const response = await fetch('/process-audio', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.transcript != null) {
+                        full_transcript += data.transcript;
+                        transcriptDiv.textContent = full_transcript;
+                    }
+                    console.log(data.transcript)
+                });
+
+                mediaRecorder.start();
+            }
+
+            createRecorder(); // Start recording initially
+
+            // Set interval to stop current recorder and start a new one every 10 seconds
+            intervalId = setInterval(() => {
+                mediaRecorder.stop();
+                createRecorder();
+            }, 5000);
+        }
+
+        function stopRecording() {
+            clearInterval(intervalId); // Stop the interval
+            mediaRecorder.stop();
+        }
+    </script>
+</body>
+</html>
