@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import tempfile
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -15,9 +16,12 @@ def index():
 def process_audio_data():
     # get audio file
     audio_file = request.files["audio"]
+
     # save audio file
-    audio_file_path = os.path.join(tempfile.gettempdir(), audio_file.filename)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    audio_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.wav")
     audio_file.save(audio_file_path)
+    
     # TODO - Whisper
     # return transcript
     return jsonify({"transcript": "Hello World"})
