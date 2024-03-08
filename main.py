@@ -31,10 +31,12 @@ def process_audio_data():
         audio_file.save(audio_file_path)
         webm_audio = AudioSegment.from_file(audio_file_path, format="webm")
         webm_audio = webm_audio.set_frame_rate(16000)  # Set the frame rate to 16000
-        webm_audio = webm_audio.split_to_mono()  # Set the frame rate to 16000
+        #webm_audio = webm_audio.split_to_mono()  # Set the frame rate to 16000
+        webm_audio = webm_audio.set_channels(1)
+        webm_audio = webm_audio.set_sample_width(2)
         # webm_audio = webm_audio.set_sample_rate(4)  # Set the frame rate to 16000
         wav_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.wav")
-        webm_audio[0].export(wav_file_path, format="wav")
+        webm_audio.export(wav_file_path, format="wav")
         os.remove(audio_file_path)
 
         
@@ -45,10 +47,11 @@ def process_audio_data():
         # convert ogg file to wav
         ogg_audio = AudioSegment.from_ogg(audio_file_path)
         ogg_audio = ogg_audio.set_frame_rate(16000)  # Set the frame rate to 16000
-        ogg_audio = ogg_audio.split_to_mono()  # Set the frame rate to 16000
+        ogg_audio = ogg_audio.set_channels(1)
+        ogg_audio = ogg_audio.set_sample_width(2)  # Set the frame rate to 16000
         # ogg_audio = ogg_audio.set_sample_rate(4)  # Set the frame rate to 16000
         wav_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.wav") 
-        ogg_audio[0].export(wav_file_path, format="wav")
+        ogg_audio.export(wav_file_path, format="wav")
         os.remove(audio_file_path)
     else:
         # handle unsupported audio format
