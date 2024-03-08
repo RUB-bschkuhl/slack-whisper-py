@@ -29,3 +29,5 @@ pipenv.lock
 # Audios TODO Add possible recorded files
 Audios/*.mp3
 Audios/*.wav
+Audios/*.webm
+Audios/*.ogg

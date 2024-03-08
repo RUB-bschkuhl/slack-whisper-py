@@ -1,1 +1,9 @@
 Flask
+
+langgraph
+langchain
+langchain_openai
+tavily-python
+python-dotenv
+
+pydub
