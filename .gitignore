@@ -25,6 +25,3 @@ env2/
 # Dependency Management
 pip-lock.txt
 pipenv.lock
-
-# Audio
-Audios/*
