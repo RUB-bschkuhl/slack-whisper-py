@@ -31,3 +31,5 @@ Audios/*.mp3
 Audios/*.wav
 Audios/*.webm
 Audios/*.ogg
+
+.DS_Store

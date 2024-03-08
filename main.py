@@ -73,10 +73,10 @@ def process_audio_data():
                             '../slack-whisper-cpp/models/ggml-medium.bin',
                             '-f',
                             wav_file_path], stdout=subprocess.PIPE)
-    print(result)
-    #./main -m models/ggml-medium.bin -f samples/jfk.wav
-    #os.system('cmd /k "../main -m slack-whisper-cpp/models/ggml-medium.bin -f Audios/{wav_file_path}"')
-    return jsonify({"transcript": "bla"})
+
+
+    transcript = result.stdout.decode()
+    return jsonify({"transcript": transcript})
 
 # function to generate suggestions
 @app.route("/generate-suggestions", methods=["POST"])
