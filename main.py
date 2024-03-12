@@ -25,6 +25,7 @@ def process_audio_data():
     ctype = audio_file.headers["Content-Type"]
     audio = requests.utils._parse_content_type_header(ctype)
     wav_file_path = '';
+    txt_file_path = os.path.join(os.path.dirname(__file__), "Transcripts", f"{timestamp}_Transcript");
     if audio[0] == "audio/webm":
         # process webm file
         audio_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.webm")
@@ -57,22 +58,22 @@ def process_audio_data():
         # handle unsupported audio format
         return jsonify({"error": "Unsupported audio format. Only webm and mp3 files are allowed."})
 
-    # audio_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.ogg")
-    # audio_file.save(audio_file_path)
-    # # convert webm file to wav
-    # ogg_audio = AudioSegment.from_ogg(audio_file_path)
-    # wav_file_path = os.path.join(os.path.dirname(__file__), "Audios", f"{timestamp}_Voice_Record.wav")
-    # ogg_audio.export(wav_file_path, format="wav")
-    # result = subprocess.run(['ls', '-l'], stdout=subprocess.PIPE)
-    # print(result)
-
     # TODO - Whisper
     # return transcript 
     result = subprocess.run(['../slack-whisper-cpp/main',
                             '-m',
                             '../slack-whisper-cpp/models/ggml-medium.bin',
                             '-f',
-                            wav_file_path], stdout=subprocess.PIPE)
+                            wav_file_path,
+                            '--language',
+                            'de',
+                            '--translate',
+                            'false',
+                            '-otxt',
+                            'true',
+                            '-of',
+                            txt_file_path
+                            ], stdout=subprocess.PIPE)
 
     transcript = result.stdout.decode()
 
