@@ -32,4 +32,6 @@ Audios/*.wav
 Audios/*.webm
 Audios/*.ogg
 
+Transcripts/*.txt
+
 .DS_Store
