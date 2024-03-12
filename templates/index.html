@@ -271,15 +271,30 @@ Lehrer: Abschließend, wie können wir unsere Freiheit bewahren und gleichzeitig
             let intervalId;
             let full_transcript = '';
 
-            suggestionButton.addEventListener('click', async () => {
-                const promptText = document.getElementById('prompt').value;
-                const response = await fetch('/generate-suggestions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ transcript: full_transcript, prompt: promptText })
-                });
+        suggestionButton.addEventListener('click', async () => {
+            const promptText = document.getElementById('prompt').value;
+            const response = await fetch('/generate-suggestionsgpt3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ transcript: full_transcript, prompt: promptText })
+            });
+
+            const data = await response.json();
+            console.log(data);
+            suggestionsDiv.innerText = data.suggestions;
+        });
+
+        suggestionButtonGPT4.addEventListener('click', async () => {
+            const promptText = document.getElementById('prompt').value;
+            const response = await fetch('/generate-suggestionsgpt4', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ transcript: full_transcript, prompt: promptText })
+            });
 
                 const data = await response.json();
                 console.log(data);

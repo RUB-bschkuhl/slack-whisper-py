@@ -8,7 +8,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
-def generate_suggestions(prompt_template, transcript):
+def generate_suggestions(prompt_template, transcript, gpt="gpt-3.5-turbo"):
     # print("Generating suggestions")
     
     prompt = f"""
@@ -19,15 +19,11 @@ def generate_suggestions(prompt_template, transcript):
     {prompt_template} 
     """
 
-    # llm = ChatOpenAI(model="gpt-4-turbo",
-    #                   api_key=OPENAI_API_KEY)
-    # response = llm.invoke(prompt)
-    # suggestion = response.choices[0].text.strip()
     from openai import OpenAI
     client = OpenAI()
 
     completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model=gpt,
     messages=[
         {"role": "system", "content": "You are a helpfull assistant."},
         {"role": "user", "content": prompt}
