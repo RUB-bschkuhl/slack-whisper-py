@@ -166,6 +166,7 @@ INPUT:
                                 <button id="recordButton" class="butts m-2">Start Recording</button>
                                 <button id="suggestionButton" class="butts m-2">Get Suggestions GPT 3.5</button>
                                 <button id="suggestionButtonGPT4" class="butts m-2">Get Suggestion GPT4</button>
+                                <button id="sucheButton" class="butts m-2">DuckDuck Search</button>
                             </div>
                         </div>
                     </div>
@@ -201,6 +202,7 @@ INPUT:
         const suggestionsDiv = document.getElementById('suggestionsContent');
         const suggestionButton = document.getElementById('suggestionButton');
         const suggestionButtonGPT4 = document.getElementById('suggestionButtonGPT4');
+        // const sucheButton = document.getElementById('sucheButton');
 
         let isRecording = false;
         let mediaRecorder;
@@ -236,6 +238,22 @@ INPUT:
             console.log(data);
             suggestionsDiv.innerText = data.suggestions;
         });
+
+        // sucheButton.addEventListener('click', async () => {
+        //     console.log("Suche geklickt")
+        //     const promptText = document.getElementById('prompt').value;
+        //     const response = await fetch('/searchandgenerate', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ transcript: full_transcript, prompt: promptText })
+        //     });
+
+        //     const data = await response.json();
+        //     console.log(data);
+        //     suggestionsDiv.innerText = data.suggestions;
+        // });
 
         recordButton.addEventListener('click', () => {
             console.log("test")

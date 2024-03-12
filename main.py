@@ -7,6 +7,8 @@ from pydub import AudioSegment
 import requests
 import subprocess
 from suggestions import generate_suggestions
+from langchain_community.tools import DuckDuckGoSearchResults
+from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
 
 
 app = Flask(__name__)
@@ -106,6 +108,47 @@ def generate_suggestions_endpoint4():
     # generate suggestions
     suggestions = generate_suggestions(prompt_template, transcript, gpt="gpt-4-turbo-preview")
     return jsonify({"suggestions": suggestions})
+
+@app.route("/searchandgenerate", methods=["POST"])
+def suche_und_zusammenfassung():
+    """
+    Führt eine Suche durch und liefert eine Zusammenfassung der Ergebnisse zurück.
+    
+    :param query: Suchanfrage oder Transkript
+    :param region: Region für die Suche (Standard ist "de-de")
+    :param time: Zeitrahmen für die Suche (Standard ist "d" für Tag)
+    :param max_results: Maximale Anzahl der Suchergebnisse
+    :param backend: Spezifiziert das Backend, kann "news" für Nachrichtensuche sein
+    :return: Zusammenfassung der Suchergebnisse
+    """
+    region="de-de"
+    time="d"
+    max_results=5
+    backend=""
+    data = request.get_json()
+    transcript = data["transcript"]
+    prompt_template = "Du bekommst ein Transkript. Erstelle dafür ein Suchschlagwort mit maximal 30 Zeichen."
+
+    
+    # generate suggestions
+    query = generate_suggestions(prompt_template, transcript, gpt="gpt-3.5-turbo")
+    print(query)
+    # Anpassen des DuckDuckGoSearchAPIWrappers
+    wrapper = DuckDuckGoSearchAPIWrapper(region=region, time=time, max_results=max_results)
+    
+    # Erstellen des Suchobjekts mit angepasstem Wrapper
+    search = DuckDuckGoSearchResults(api_wrapper=wrapper)
+    
+    # Durchführung der Suche
+    results = search.run(query)
+    print(results)
+    # Verarbeitung und Zusammenfassung der Ergebnisse
+    # Diese Schritt wäre abhängig von den spezifischen Anforderungen und könnte so einfach oder komplex sein, wie benötigt.
+    # Hier ein einfacher Ansatz, der die Titel der gefundenen Artikel zurückgibt:
+    zusammenfassung = '\n'.join([f"Titel: {res['title']}, Link: {res['link']}" for res in results])
+    
+    return jsonify({"suggestions": zusammenfassung})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8083)
