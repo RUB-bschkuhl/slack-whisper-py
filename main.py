@@ -85,7 +85,7 @@ def process_audio_data():
     return jsonify({"transcript": transcript})
 
 @app.route("/generate-suggestionsgpt3", methods=["POST"])
-def generate_suggestions_endpoint():
+def generate_suggestions_endpoint3():
     # get prompt template and transcript
     data = request.get_json()
     prompt_template = data["prompt"]
@@ -97,7 +97,7 @@ def generate_suggestions_endpoint():
     return jsonify({"suggestions": suggestions})
 
 @app.route("/generate-suggestionsgpt4", methods=["POST"])
-def generate_suggestions_endpoint():
+def generate_suggestions_endpoint4():
     # get prompt template and transcript
     data = request.get_json()
     prompt_template = data["prompt"]
@@ -105,7 +105,6 @@ def generate_suggestions_endpoint():
     
     # generate suggestions
     suggestions = generate_suggestions(prompt_template, transcript, gpt="gpt-4-turbo-preview")
-    
     return jsonify({"suggestions": suggestions})
 
 if __name__ == "__main__":
