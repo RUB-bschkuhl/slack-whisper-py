@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import tempfile
 import os
 from datetime import datetime
@@ -9,6 +10,8 @@ from suggestions import generate_suggestions
 
 
 app = Flask(__name__)
+CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 
 # render html
 # TODO - Später Vue.js einbinden
@@ -81,7 +84,7 @@ def process_audio_data():
     #os.remove(wav_file_path)
     return jsonify({"transcript": transcript})
 
-@app.route("/generate-suggestions", methods=["POST"])
+@app.route("/generate-suggestionsgpt3", methods=["POST"])
 def generate_suggestions_endpoint():
     # get prompt template and transcript
     data = request.get_json()
@@ -89,7 +92,19 @@ def generate_suggestions_endpoint():
     transcript = data["transcript"]
     
     # generate suggestions
-    suggestions = generate_suggestions(prompt_template, transcript)
+    suggestions = generate_suggestions(prompt_template, transcript, gpt="gpt-3.5-turbo")
+    
+    return jsonify({"suggestions": suggestions})
+
+@app.route("/generate-suggestionsgpt4", methods=["POST"])
+def generate_suggestions_endpoint():
+    # get prompt template and transcript
+    data = request.get_json()
+    prompt_template = data["prompt"]
+    transcript = data["transcript"]
+    
+    # generate suggestions
+    suggestions = generate_suggestions(prompt_template, transcript, gpt="gpt-4-turbo-preview")
     
     return jsonify({"suggestions": suggestions})
 
