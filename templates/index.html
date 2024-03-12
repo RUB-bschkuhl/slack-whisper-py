@@ -182,7 +182,6 @@
 
         suggestionButton.addEventListener('click', async () => {
             const promptText = document.getElementById('prompt').value;
-            full_transcript = "Ich berichte euch heute etwas über Moodle."
             const response = await fetch('/generate-suggestions', {
                 method: 'POST',
                 headers: {
