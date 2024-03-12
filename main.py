@@ -74,14 +74,22 @@ def process_audio_data():
                             '-f',
                             wav_file_path], stdout=subprocess.PIPE)
 
-
     transcript = result.stdout.decode()
+
+    #os.remove(wav_file_path)
     return jsonify({"transcript": transcript})
 
 # function to generate suggestions
 @app.route("/generate-suggestions", methods=["POST"])
 def generate_suggestions():
-    return jsonify({"suggestions": ["Hello", "World"]})
+    # get prompt template and transcript
+    prompt_template = request.form["prompt_template"]
+    transcript = request.form["transcript"]
+    prompt_template = "Generiere Fragen auf Basis des gesprochenen Textes."
+    # generate suggestions
+    suggestion = generate_suggestions(prompt_template, transcript)
+
+    return jsonify({"suggestions": suggestion})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8082)
+    app.run(host="0.0.0.0", port=8083)
