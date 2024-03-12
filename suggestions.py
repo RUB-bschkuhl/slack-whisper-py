@@ -11,7 +11,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 def generate_suggestions(prompt_template, transcript):
     # print("Generating suggestions")
     
-    prompt = """
+    prompt = f"""
     Transcript:
     {transcript}
     -------------
@@ -34,6 +34,6 @@ def generate_suggestions(prompt_template, transcript):
     ]
     )
 
-    print(completion.choices[0].message.content)
+    print(prompt,completion)
     
     return completion.choices[0].message.content
