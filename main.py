@@ -5,6 +5,7 @@ from datetime import datetime
 from pydub import AudioSegment
 import requests
 import subprocess
+from suggestions import generate_suggestions
 
 
 app = Flask(__name__)
@@ -80,17 +81,17 @@ def process_audio_data():
     #os.remove(wav_file_path)
     return jsonify({"transcript": transcript})
 
-# function to generate suggestions
 @app.route("/generate-suggestions", methods=["POST"])
-def generate_suggestions():
+def generate_suggestions_endpoint():
     # get prompt template and transcript
-    prompt_template = request.form["prompt_template"]
-    transcript = request.form["transcript"]
-    prompt_template = "Generiere Fragen auf Basis des gesprochenen Textes."
+    data = request.get_json()
+    prompt_template = data["prompt"]
+    transcript = data["transcript"]
+    
     # generate suggestions
-    suggestion = generate_suggestions(prompt_template, transcript)
-
-    return jsonify({"suggestions": suggestion})
+    suggestions = generate_suggestions(prompt_template, transcript)
+    
+    return jsonify({"suggestions": suggestions})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8083)

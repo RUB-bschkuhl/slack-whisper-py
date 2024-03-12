@@ -182,8 +182,8 @@
 
         suggestionButton.addEventListener('click', async () => {
             const promptText = document.getElementById('prompt').value;
-
-            const response = await fetch('/get-suggestion', {
+            full_transcript = "Ich berichte euch heute etwas über Moodle."
+            const response = await fetch('/generate-suggestions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -193,17 +193,17 @@
 
             const data = await response.json();
             console.log(data);
-            document.getElementById('suggestion').textContent = data.suggestion;
+            suggestionsDiv.innerText = data.suggestions;
         });
 
         recordButton.addEventListener('click', () => {
             console.log("test")
             if (!isRecording) {
                 startRecording();
-                recordButton.textContent = 'Stop Recording';
+                //recordButton.textContent = 'Stop Recording';
             } else {
                 stopRecording();
-                recordButton.textContent = 'Start Recording';
+               // recordButton.textContent = 'Start Recording';
             }
             isRecording = !isRecording;
         });
