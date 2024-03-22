@@ -164,6 +164,7 @@
                                     <button id="recordButton" class="butts m-2">Start Recording</button>
                                     <button id="suggestionButton" class="butts m-2">Get Suggestion</button>
                                     <button id="suggestionButtonGPT4" class="butts m-2">Get Suggestion GPT4</button>
+                                    <button id="suggestionsLocalButton" class="butts m-2">Get Suggestion Local</button>
                                 </div>
                             </div>
                         </div>
@@ -205,6 +206,7 @@
             const suggestionsDiv = document.getElementById('suggestionsContent');
             const suggestionButton = document.getElementById('suggestionButton');
             const suggestionButtonGPT4 = document.getElementById('suggestionButtonGPT4');
+            const suggestionButtonLocal = document.getElementById('suggestionsLocalButton');
             let suggestionSelection = document.getElementById('promptMenu');
             const promptArea = document.getElementById('prompt');
             const transcriptInput = document.getElementById('transcriptContentMan');
@@ -312,6 +314,7 @@ Lehrer: Abschließend, wie können wir unsere Freiheit bewahren und gleichzeitig
                 }
                 isRecording = !isRecording;
             });
+
 
             transcriptSetButton.addEventListener('click', () => {
                 full_transcript = transcriptInput.value;

@@ -6,7 +6,7 @@ from datetime import datetime
 from pydub import AudioSegment
 import requests
 import subprocess
-from suggestions import generate_suggestions
+from suggestions import generate_suggestions, generate_suggestions_local
 from langchain_community.tools import DuckDuckGoSearchResults
 from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
 
@@ -107,6 +107,17 @@ def generate_suggestions_endpoint4():
     
     # generate suggestions
     suggestions = generate_suggestions(prompt_template, transcript, gpt="gpt-4-turbo-preview")
+    return jsonify({"suggestions": suggestions})
+
+@app.route("/generate_suggestions_local", methods=["POST"])
+def generate_suggestions_endpoint_local():
+    # get prompt template and transcript
+    data = request.get_json()
+    prompt_template = data["prompt"]
+    transcript = data["transcript"]
+    
+    # generate suggestions
+    suggestions = generate_suggestions_local(prompt_template, transcript)
     return jsonify({"suggestions": suggestions})
 
 @app.route("/searchandgenerate", methods=["POST"])
