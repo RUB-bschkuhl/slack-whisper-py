@@ -7,7 +7,6 @@
 - [Benutzung](#benutzung)
 - [Abhängigkeiten](#abhängigkeiten)
 - [Beitragen](#beitragen)
-- [Danksagungen](#danksagungen)
 - [Lizenz](#lizenz)
 
 ## Einführung
