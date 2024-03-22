@@ -12,6 +12,9 @@
 
 ## Einführung
 
+`slack-whisper-py` ist ein Projekt, das innerhalb weniger Stunden an einem Tag zur Selbstqualifizierung entwickelt wurde. Ziel war es, ein innovatives Coaching-Tool zu erstellen, das in der Lage ist, Live-Feedback zu geben, Lern- und Entwicklungsprozesse zu unterstützen und Benutzer interaktiv durch verschiedene Szenarien zu führen. Dieses Tool ermöglicht es Benutzern, Sprachnachrichten direkt zu transkribieren und macht die Kommunikation zugänglicher und effizienter. Es soll die Entwicklung interaktiver Coaching-Anwendungen demonstrieren. **Bitte beachten Sie, dass es sich um einen simplen Prototyp handelt und dieser lediglich zu Lernzwecken dient. Eine Verwendung in Produktivumgebungen wird nicht empfohlen.**
+
+Um den vollen Funktionsumfang zu gewährleisten, muss zusätzlich ein lokales Language Model (LLM) laufen, beispielsweise mittels [LM Studio](https://lmstudio.ai/). Dies ermöglicht eine weitergehende Verarbeitung und Analyse der transkribierten Texte.
 
 
 ## Installation
@@ -67,9 +70,3 @@ Wir begrüßen Beiträge zum Projekt `slack-whisper-py`! Um beizutragen:
 2. Erstelle einen neuen Branch für dein Feature oder deinen Fix.
 3. Committe deine Änderungen und pushe sie zu deinem Fork.
 4. Reiche einen Pull Request mit einer klaren Beschreibung deiner Änderungen ein.
-
-## Danksagungen
-
-Ein besonderer Dank gilt den Beitragenden des `slack-whisper-cpp` Projekts für ihre Arbeit an der Kompilierung des Whisper-Modells. Ihr Projekt diente als Grundlage und Inspiration für `slack-whisper-py`.
-
-Besonderer Dank geht auch an Alexander Mikasch ([Github](https://github.com/Freakrider)) und Annika Lambert für ihre Beiträge und Unterstützung des Projekts.
