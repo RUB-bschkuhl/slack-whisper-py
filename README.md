@@ -12,11 +12,13 @@ Um das Projekt zu initialisieren, folgen Sie bitte den untenstehenden Schritten:
 
 Nachdem Sie diese Schritte abgeschlossen haben, ist das Projekt bereit zur Verwendung.
 
+Readme zum compilen eines Whisper Models mit whisper.cpp: 
+https://github.com/RUB-bschkuhl/slack-whisper-cpp/blob/master/README.md
 
 
-Verwendung des für AEN kompilierten Models in /slack-whisper-cpp
+Verwendung des kompilierten Models in /slack-whisper-cpp
 
-Model aus Sciebo nach /slack-whisper-cpp/models verschieben dann:
+Heruntergeladenes Model nach /slack-whisper-cpp/models verschieben, dann Nutzung über Terminal (Anleitung ebenfalls in der oben angegebenen Readme):
 ./main -m models/ggml-[model].bin -f samples/jfk.wav
-E.g. mit dem Whisper Medium Model
+Bspw. mit dem Whisper Medium Model
 ./main -m models/ggml-medium.bin -f samples/jfk.wav
